@@ -100,7 +100,7 @@ function App() {
           lineTension: 0.2,
           borderColor: 'rgba(0,0,0,1)',
           borderWidth: 1,
-          data: aryValues,
+          data: newArray,
         }
       ]
     });
