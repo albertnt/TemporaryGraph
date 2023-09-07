@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,7 +8,7 @@ import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 
 
-const state = {
+/*const state = {
   labels: [
     'Monday',
     'Tuesday',
@@ -37,30 +37,92 @@ const state = {
       data: [10, 14, 17, 16, 19, 16, 17],
     },
   ],
-}
+}*/
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  //const [count, setCount] = useState(0)
+  const [values, setValues] = useState("");
+  
+  const [state, setState] = useState({
+    labels: [
+      /*'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',*/
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+    ],
+    datasets: [
+      {
+        label: 'Values',
+        /*backgroundColor: [
+          'Indigo',
+          'Purple',
+          'Yellow',
+          'Teal',
+          'Red',
+          'Navy',
+          'Brown',
+        ],*/
+        fill: false,
+        lineTension: 0.2,
+        borderColor: 'rgba(0,0,0,1)',
+        borderWidth: 1,
+        data: [4, 5, 17, 3, 1, 0, 3],
+      },
+    ],
+  });
+
+  const setNewValues = (newValues: string) => {
+    console.log("String values: ",newValues);
+    //string parsing to array of values
+    const aryValues = newValues.split(",").map((item)=>item.trim());
+    console.log("Splitted values: ",aryValues);
+    //then set state
+    /*setState({
+      name: nameChanged,
+      maxlength: usernameObj.maxlength,
+      onUsernameObjChange: setUsernameObject
+    });*/
+  };
+
 
   return (
     <>
     <div>
-        <Line
-          data={state}
-          options={{
-            title: {
-              display: true,
-              text: 'Class Strength',
-              fontSize: 20,
-            },
-            legend: {
-              display: true,
-              position: 'right',
-            },
-          }}
-        />
+      <Line
+        data={state}
+        /*options={{
+          title: {
+            display: true,
+            text: 'Values',
+            fontSize: 20,
+          },
+          legend: {
+            display: true,
+            position: 'right',
+          },
+        }}*/
+      />
+      <div>
+        Values: <input type="text" id="values" name="values" placeholder='comma separated values...' value={values} onChange={
+          (event: React.ChangeEvent<HTMLInputElement>) => {
+            //console.log(event.target.value);
+            setNewValues(event.target.value);
+            setValues(event.target.value);
+          }
+        }></input>
       </div>
+    </div>
       {/*<div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
