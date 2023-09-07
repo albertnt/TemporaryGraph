@@ -53,13 +53,6 @@ function App() {
       'Friday',
       'Saturday',
       'Sunday',*/
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
     ],
     datasets: [
       {
@@ -77,22 +70,37 @@ function App() {
         lineTension: 0.2,
         borderColor: 'rgba(0,0,0,1)',
         borderWidth: 1,
-        data: [4, 5, 17, 3, 1, 0, 3],
+        //data: [4, 5, 17, 3, 1, 0, 3],
+        data: [],
       },
     ],
   });
 
   const setNewValues = (newValues: string) => {
-    console.log("String values: ",newValues);
+    //console.log("String values: ",newValues);
     //string parsing to array of values
-    const aryValues = newValues.split(",").map((item)=>item.trim());
+    let aryValues:number[] = newValues.split(",").map((item)=>parseInt(item.trim()));
     console.log("Splitted values: ",aryValues);
+    //console.log("Array lenght: ",aryValues.lenght);
+    let aryLabels:string[] = [];
+    /*for (let i = 0; i < aryValues.lenght; i++){
+      aryLabels.push("");
+    }*/
+    //console.log("Labels: ",aryLabels);
     //then set state
-    /*setState({
-      name: nameChanged,
-      maxlength: usernameObj.maxlength,
-      onUsernameObjChange: setUsernameObject
-    });*/
+    setState({
+      labels: aryValues,
+      datasets: [
+        {
+          label: 'Values',
+          fill: false,
+          lineTension: 0.2,
+          borderColor: 'rgba(0,0,0,1)',
+          borderWidth: 1,
+          data: aryValues,
+        }
+      ]
+    });
   };
 
 
