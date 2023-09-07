@@ -80,16 +80,19 @@ function App() {
     //console.log("String values: ",newValues);
     //string parsing to array of values
     let aryValues:number[] = newValues.split(",").map((item)=>parseInt(item.trim()));
-    console.log("Splitted values: ",aryValues);
-    //console.log("Array lenght: ",aryValues.lenght);
-    let aryLabels:string[] = [];
-    /*for (let i = 0; i < aryValues.lenght; i++){
-      aryLabels.push("");
+    //remove NaN
+    const newArray = aryValues.filter(function (value) {
+      return !Number.isNaN(value);
+    });
+    console.log("Splitted values: ",newArray);
+    /*let aryLabels:string[] = [];
+    for (let i = 0; i < newArray.lenght; i++){
+      aryLabels.push((i+1).toString());
     }*/
     //console.log("Labels: ",aryLabels);
     //then set state
     setState({
-      labels: aryValues,
+      labels: newArray,
       datasets: [
         {
           label: 'Values',
