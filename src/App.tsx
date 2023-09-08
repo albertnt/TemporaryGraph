@@ -84,15 +84,15 @@ function App() {
     const newArray = aryValues.filter(function (value) {
       return !Number.isNaN(value);
     });
-    console.log("Splitted values: ",newArray);
-    /*let aryLabels:string[] = [];
-    for (let i = 0; i < newArray.lenght; i++){
+    //console.log("Splitted values: ",newArray.length);
+    let aryLabels:any = [];
+    for (let i = 0; i < newArray.length; i++){
       aryLabels.push((i+1).toString());
-    }*/
-    //console.log("Labels: ",aryLabels);
+    }
+    console.log("Labels: ",aryLabels);
     //then set state
     setState({
-      labels: newArray,
+      labels: aryLabels,
       datasets: [
         {
           label: 'Values',
@@ -127,9 +127,12 @@ function App() {
       <div>
         Values: <input type="text" id="values" name="values" placeholder='comma separated values...' value={values} onChange={
           (event: React.ChangeEvent<HTMLInputElement>) => {
+            const rgxpInput = /^[-,0-9]+$/;
             //console.log(event.target.value);
-            setNewValues(event.target.value);
-            setValues(event.target.value);
+            if(event.target.value === '' || rgxpInput.test(event.target.value)){
+              setNewValues(event.target.value);
+              setValues(event.target.value);
+            }
           }
         }></input>
       </div>
