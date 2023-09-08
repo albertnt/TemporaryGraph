@@ -42,7 +42,8 @@ Chart.register(...registerables)
 
 function App() {
   //const [count, setCount] = useState(0)
-  const [values, setValues] = useState([0]);
+  const [values, setValues] = useState([]);
+  const [defaultInputValue, setdefaultInputValue] = useState([]);
 
   const [aryStack, setAryStack] = useState([]);
   
@@ -78,7 +79,7 @@ function App() {
     ],
   });
 
-  const setNewValues = (newValues: string) => {
+  /*const setNewValues = (newValues: string) => {
     //console.log("String values: ",newValues);
     //string parsing to array of values
     let aryValues:number[] = newValues.split(",").map((item)=>parseInt(item.trim()));
@@ -107,7 +108,7 @@ function App() {
       ]
     });
     setAryStack(newArray);
-  };
+  };*/
 
 
   const handleKeyDown = (event:any) => {
@@ -141,9 +142,15 @@ function App() {
         ]
       });
       setAryStack(newArray);
+      //setValues([]);
+      //console.log(aryStack);
     }
   };
 
+  const handleRemoveValue = (indexToRemove:number) => {
+    console.log("Remove value: ", indexToRemove);
+    //aryStack.splice(index, indexToRemove);
+  }
 
   return (
     <>
@@ -169,18 +176,23 @@ function App() {
             const rgxpInput = /^[-,0-9]+$/;
             //console.log(event.target.value);
             if(event.target.value === '' || rgxpInput.test(event.target.value)){
-              //setNewValues(event.target.value);
+              //setNewValues(event.target.value); <--- moved to onkeydown
               setValues(event.target.value);
             }
           }
         }
-        onKeyDown={handleKeyDown}></input>
-        {/*
-          aryStack.map((element) => {
-            console.log(element);
-          })*/
-        }
+        onKeyDown={handleKeyDown}></input> (press enter to confirm)
       </div>
+      <>
+        {
+          //if(aryStack.length > 0) <div>Values list</div>
+        }
+        {
+          (aryStack.length > 0 && aryStack.map( (item, index) => 
+            <div key={index} className='rowValue'>{item} <button onClick={handleRemoveValue(index)}>-</button></div>
+          ))
+        }
+      </>
     </div>
       {/*<div>
         <a href="https://vitejs.dev" target="_blank">
