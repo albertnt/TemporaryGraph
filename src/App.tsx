@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { KeyboardEventHandler, ReactEventHandler, useState } from 'react';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -42,7 +42,9 @@ Chart.register(...registerables)
 
 function App() {
   //const [count, setCount] = useState(0)
-  const [values, setValues] = useState("");
+  const [values, setValues] = useState([0]);
+
+  const [aryStack, setAryStack] = useState([]);
   
   const [state, setState] = useState({
     labels: [
@@ -89,7 +91,7 @@ function App() {
     for (let i = 0; i < newArray.length; i++){
       aryLabels.push((i+1).toString());
     }
-    console.log("Labels: ",aryLabels);
+    //console.log("Labels: ",aryLabels);
     //then set state
     setState({
       labels: aryLabels,
@@ -104,6 +106,42 @@ function App() {
         }
       ]
     });
+    setAryStack(newArray);
+  };
+
+
+  const handleKeyDown = (event:any) => {
+    if (event.key === 'Enter'){
+      //console.log("pressed enter!");
+      //console.log(event.target.value);
+      const newValues = event.target.value;
+      let aryValues:number[] = newValues.split(",").map((item)=>parseInt(item.trim()));
+      //remove NaN
+      const newArray = aryValues.filter(function (value) {
+        return !Number.isNaN(value);
+      });
+      //console.log("Splitted values: ",newArray);
+      let aryLabels:any = [];
+      for (let i = 0; i < newArray.length; i++){
+        aryLabels.push((i+1).toString());
+      }
+      //console.log("Labels: ",aryLabels);
+      //then set state
+      setState({
+        labels: aryLabels,
+        datasets: [
+          {
+            label: 'Values',
+            fill: false,
+            lineTension: 0.2,
+            borderColor: 'rgba(0,0,0,1)',
+            borderWidth: 1,
+            data: newArray,
+          }
+        ]
+      });
+      setAryStack(newArray);
+    }
   };
 
 
@@ -125,16 +163,23 @@ function App() {
         }}*/
       />
       <div>
-        Values: <input type="text" id="values" name="values" placeholder='comma separated values...' value={values} onChange={
+        New value: <input className='inputValue' type="text" id="values" name="values" value={values} 
+        onChange={
           (event: React.ChangeEvent<HTMLInputElement>) => {
             const rgxpInput = /^[-,0-9]+$/;
             //console.log(event.target.value);
             if(event.target.value === '' || rgxpInput.test(event.target.value)){
-              setNewValues(event.target.value);
+              //setNewValues(event.target.value);
               setValues(event.target.value);
             }
           }
-        }></input>
+        }
+        onKeyDown={handleKeyDown}></input>
+        {/*
+          aryStack.map((element) => {
+            console.log(element);
+          })*/
+        }
       </div>
     </div>
       {/*<div>
