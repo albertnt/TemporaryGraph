@@ -148,8 +148,9 @@ function App() {
   };
 
   const handleRemoveValue = (indexToRemove:number) => {
-    console.log("Remove value: ", indexToRemove);
-    //aryStack.splice(index, indexToRemove);
+    //console.log("Remove value: ", indexToRemove);
+    //remove 1 element at indexToRemove
+    //setAryStack(aryStack.splice(indexToRemove,1));
   }
 
   return (
@@ -185,11 +186,8 @@ function App() {
       </div>
       <>
         {
-          //if(aryStack.length > 0) <div>Values list</div>
-        }
-        {
           (aryStack.length > 0 && aryStack.map( (item, index) => 
-            <div key={index} className='rowValue'>{item} <button onClick={handleRemoveValue(index)}>-</button></div>
+            <div key={index} className='rowValue'>{item} <button key={"b"+index} onClick={handleRemoveValue(index)} title="Delete this value">-</button></div>
           ))
         }
       </>
