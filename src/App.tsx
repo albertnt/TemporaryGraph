@@ -148,9 +148,31 @@ function App() {
   };
 
   const handleRemoveValue = (indexToRemove:number) => {
-    //console.log("Remove value: ", indexToRemove);
+    //console.log("Remove value: ", indexToRemove, aryStack.splice(indexToRemove,1));
+    //console.log("Remaining values: ",aryStack);
     //remove 1 element at indexToRemove
-    //setAryStack(aryStack.splice(indexToRemove,1));
+    aryStack.splice(indexToRemove,1);
+    //duplicate ary so the state is immutable
+    setAryStack(Array.from(aryStack));
+    //console.log("Remaining values: ",aryStack);
+    //recalculate graph
+    let aryLabels:any = [];
+    for (let i = 0; i < aryStack.length; i++){
+      aryLabels.push((i+1).toString());
+    }
+    setState({
+      labels: aryLabels,
+      datasets: [
+        {
+          label: 'Values',
+          fill: false,
+          lineTension: 0.2,
+          borderColor: 'rgba(0,0,0,1)',
+          borderWidth: 1,
+          data: aryStack,
+        }
+      ]
+    });
   }
 
   return (
@@ -187,7 +209,7 @@ function App() {
       <>
         {
           (aryStack.length > 0 && aryStack.map( (item, index) => 
-            <div key={index} className='rowValue'>{item} <button key={"b"+index} onClick={handleRemoveValue(index)} title="Delete this value">-</button></div>
+            <div key={index} className='rowValue'>{item} <button key={"b"+index} onClick={() => handleRemoveValue(index)} title="Delete this value">-</button></div>
           ))
         }
       </>
