@@ -110,7 +110,7 @@ function App() {
     setAryStack(newArray);
   };*/
 
-
+  //comma separated values
   const handleKeyDown = (event:any) => {
     if (event.key === 'Enter'){
       //console.log("pressed enter!");
@@ -143,6 +143,36 @@ function App() {
       });
       setAryStack(newArray);
       //setValues([]);
+      //console.log(aryStack);
+    }
+  };
+
+  //single value but with double 
+  const handleKeyDown2 = (event:any) => {
+    if (event.key === 'Enter'){
+      let aryLabels:any = [];
+      //push new value
+      let newArray:any = [...aryStack,event.target.value]
+      for (let i = 0; i < newArray.length; i++){
+        aryLabels.push((i+1).toString());
+      }
+      //console.log("Labels: ",aryLabels);
+      //then set state
+      setState({
+        labels: aryLabels,
+        datasets: [
+          {
+            label: 'Values',
+            fill: false,
+            lineTension: 0.2,
+            borderColor: 'rgba(0,0,0,1)',
+            borderWidth: 1,
+            data: newArray,
+          }
+        ]
+      });
+      setAryStack(newArray);
+      setValues([]);
       //console.log(aryStack);
     }
   };
@@ -196,7 +226,8 @@ function App() {
         New value: <input className='inputValue' type="text" id="values" name="values" value={values} 
         onChange={
           (event: React.ChangeEvent<HTMLInputElement>) => {
-            const rgxpInput = /^[-,0-9]+$/;
+            //const rgxpInput = /^[-,0-9]+$/;
+            const rgxpInput = /^[-.0-9]+$/;
             //console.log(event.target.value);
             if(event.target.value === '' || rgxpInput.test(event.target.value)){
               //setNewValues(event.target.value); <--- moved to onkeydown
@@ -204,7 +235,7 @@ function App() {
             }
           }
         }
-        onKeyDown={handleKeyDown}></input> (press enter to confirm)
+        onKeyDown={handleKeyDown2}></input> (press enter to confirm)
       </div>
       <>
         {
